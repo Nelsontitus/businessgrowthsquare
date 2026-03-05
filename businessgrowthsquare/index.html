@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Business Growth Square</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Serif:ital@0;1&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #F7F3EE;
+      --ink: #0E0C0A;
+      --gold: #E8960C;
+      --gold2: #F5B730;
+      --border: #E0DADA;
+    }
+
+    html { background: var(--bg); }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 440px;
+      padding-bottom: 80px;
+    }
+
+    .hero-photo-wrap {
+      width: 100%;
+      height: 414px;
+      overflow: hidden;
+      display: block;
+      background: var(--ink);
+      position: relative;
+    }
+
+    .hero-photo {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 85%;
+      display: block;
+    }
+
+    /* If the image file is missing, show a clean placeholder instead of a broken image icon */
+    .hero-fallback {
+      position: absolute;
+      inset: 0;
+      display: none;
+      place-items: center;
+      text-align: center;
+      padding: 24px;
+      color: rgba(255,255,255,0.75);
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      background:
+        radial-gradient(60% 60% at 50% 30%, rgba(232,150,12,0.22), transparent 70%),
+        linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0));
+    }
+
+    .ticker {
+      background: var(--ink);
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 9px 0;
+    }
+
+    .ticker-track {
+      display: inline-flex;
+      animation: ticker 20s linear infinite;
+    }
+
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    .ticker-item {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+       color:#fff; 
+      padding: 0 18px;
+    }
+
+    .ticker-dot { opacity: 0.4; }
+
+    .section-label {
+      padding: 28px 24px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-label-text {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: rgba(20,15,10,0.35);
+      white-space: nowrap;
+    }
+
+    .section-label-rule {
+      flex: 1;
+      height: 1px;
+      background: rgba(20,15,10,0.12);
+    }
+
+    .cards {
+      padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .card {
+      display: block;
+      text-decoration: none;
+      border-radius: 8px;
+      overflow: hidden;
+      position: relative;
+      opacity: 0;
+      animation: rise 0.55s cubic-bezier(0.22,1,0.36,1) forwards;
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+
+    .card:hover { transform: scale(1.025); }
+
+    .card:nth-child(1) { animation-delay: 0.05s; }
+    .card:nth-child(2) { animation-delay: 0.12s; }
+    .card:nth-child(3) { animation-delay: 0.19s; }
+    .card:nth-child(4) { animation-delay: 0.26s; }
+    .card:nth-child(5) { animation-delay: 0.33s; }
+    .card:nth-child(6) { animation-delay: 0.40s; }
+    .card:nth-child(7) { animation-delay: 0.47s; }
+
+    @keyframes rise {
+      from { opacity: 0; transform: translateY(20px) scale(0.98); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .card-black { background: var(--ink); }
+    .card-white { background: #FFFFFF; border: 1.5px solid var(--border); }
+
+    .card::after {
+      content: '';
+      position: absolute;
+      top: 0; right: 0;
+      width: 48px; height: 48px;
+      clip-path: polygon(100% 0, 0 0, 100% 100%);
+      pointer-events: none;
+    }
+    .card-black::after { background: rgba(255,255,255,0.04); }
+    .card-white::after { background: rgba(20,15,10,0.03); }
+
+    .card-body {
+      padding: 22px 22px 16px;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+    }
+
+    .card-index {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .card-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1;
+    }
+    .card-black .card-num { color: rgba(255,255,255,0.25); }
+    .card-white .card-num { color: rgba(20,15,10,0.15); }
+
+    .card-vline { width: 1px; height: 32px; }
+    .card-black .card-vline { background: rgba(255,255,255,0.15); }
+    .card-white .card-vline { background: rgba(20,15,10,0.12); }
+
+    .card-content { flex: 1; }
+
+    .card-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      font-family: 'Space Mono', monospace;
+      font-size: 8px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      border-radius: 100px;
+      margin-bottom: 10px;
+    }
+    .card-black .card-pill { border: 1px solid rgba(255,255,255,0.2); color: rgba(255,255,255,0.7); }
+    .card-white .card-pill { border: 1px solid rgba(20,15,10,0.15); color: rgba(20,15,10,0.55); }
+
+    .pill-dot { width: 5px; height: 5px; border-radius: 50%; }
+    .card-black .pill-dot { background: rgba(255,255,255,0.5); }
+    .card-white .pill-dot { background: rgba(20,15,10,0.35); }
+    .pill-dot-live { background: #FF6B6B !important; animation: blink 1s infinite; }
+
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
+    .card-title {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 1.25;
+      letter-spacing: -0.3px;
+      margin-bottom: 7px;
+    }
+    .card-black .card-title { color: #fff; }
+    .card-white .card-title { color: var(--ink); }
+
+    .card-desc {
+      font-family: 'Instrument Serif', serif;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+    .card-black .card-desc { color: rgba(255,255,255,0.6); }
+    .card-white .card-desc { color: rgba(20,15,10,0.55); }
+
+    .card-footer-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 22px 16px;
+    }
+    .card-black .card-footer-bar { border-top: 1px solid rgba(255,255,255,0.1); }
+    .card-white .card-footer-bar { border-top: 1px solid rgba(20,15,10,0.08); }
+
+    .card-cta {
+      font-family: 'Syne', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      transition: letter-spacing 0.25s ease;
+    }
+    .card-black .card-cta { color: rgba(255,255,255,0.9); }
+    .card-white .card-cta { color: var(--ink); }
+    .card:hover .card-cta { letter-spacing: 3px; }
+
+    .arrow-circle {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .card-black .arrow-circle { background: rgba(255,255,255,0.15); }
+    .card-white .arrow-circle { background: var(--ink); }
+    .card-black .arrow-circle svg { stroke: rgba(255,255,255,0.9); }
+    .card-white .arrow-circle svg { stroke: #fff; }
+    .card:hover .arrow-circle { transform: rotate(45deg); background: var(--gold) !important; }
+    .card:hover .arrow-circle svg { stroke: var(--ink) !important; }
+
+    .arrow-circle svg {
+      width: 13px; height: 13px;
+      transition: stroke 0.25s ease;
+      fill: none;
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .footer { margin: 36px 20px 0; }
+
+    .footer-inner {
+      background: var(--ink);
+      border-radius: 8px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .footer-inner::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(45deg, rgba(232,150,12,0.04) 0px, rgba(232,150,12,0.04) 1px, transparent 1px, transparent 16px),
+        repeating-linear-gradient(-45deg, rgba(232,150,12,0.04) 0px, rgba(232,150,12,0.04) 1px, transparent 1px, transparent 16px);
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 17px;
+      color: #fff;
+      letter-spacing: -0.5px;
+      position: relative;
+    }
+    .footer-name span { color: var(--gold); }
+
+    .footer-sub {
+      font-family: 'Space Mono', monospace;
+      font-size: 9px;
+      color: rgba(255,255,255,0.3);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 4px;
+      position: relative;
+    }
+
+    .footer-badge {
+      position: relative;
+      width: 44px; height: 44px;
+      background: var(--gold);
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      color: var(--ink);
+      letter-spacing: 1px;
+      transform: rotate(-6deg);
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="hero-photo-wrap">
+    <img src="profile.jpeg" alt="Business Growth Square" class="hero-photo"
+         onerror="this.style.display='none'; this.parentElement.querySelector('.hero-fallback').style.display='grid';"/>
+    <div class="hero-fallback">
+      Add your image file named profile.jpg in the same folder as this HTML
+    </div>
+  </div>
+
+  <div class="ticker">
+    <div class="ticker-track">
+      <span class="ticker-item">UK Self-Sponsorship</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Business Masterclass</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Immigration Lawyer</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">80+ Supplier Contacts</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Web Design</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Black Business Community</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">UK Self-Sponsorship</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Business Masterclass</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Immigration Lawyer</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">80+ Supplier Contacts</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Web Design</span><span class="ticker-item ticker-dot">✦</span>
+      <span class="ticker-item">Black Business Community</span><span class="ticker-item ticker-dot">✦</span>
+    </div>
+  </div>
+
+  <div class="section-label">
+    <span class="section-label-text">What we offer</span>
+    <div class="section-label-rule"></div>
+  </div>
+
+  <div class="cards">
+
+    <a href="https://event.webinarjam.com/zmmqx/register/xrromi25" target="_blank" class="card card-black">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">01</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>Free Class · 2026</div>
+          <div class="card-title">Get Self Sponsorship in the UK</div>
+          <div class="card-desc">A practical step-by-step guide on how to become your own sponsor in the UK this 2026.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Access Free Class</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://calendly.com/immigration-lawyer-wm8o/30-minutes-one-on-one-uk-self-sponsorship-consultation" target="_blank" class="card card-white">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">02</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>Paid · Expert Lawyer</div>
+          <div class="card-title">UK Self-Sponsorship Consultation</div>
+          <div class="card-desc">Speak with our licenced immigration lawyer who specialises in self-sponsorship. This is a paid call.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Book a Paid Call</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://chat.whatsapp.com/FWqVPy6RBrAJGx6cee4Xrg?mode=gi_t" target="_blank" class="card card-black">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">03</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot pill-dot-live"></span>Free · Live Online</div>
+          <div class="card-title">Start a Business in the UK — Masterclass</div>
+          <div class="card-desc">A FREE live online class. You'll leave with 50 carefully handpicked business ideas you can start in the UK today.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Join Free Masterclass</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://calendly.com/julietorji-businessgrowthsquare/one-on-one-business-consultation-40" target="_blank" class="card card-white">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">04</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>1-on-1 Session</div>
+          <div class="card-title">One on One Session With Me</div>
+          <div class="card-desc">Speak to me directly about Business, Clarity or Self-Development.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Book a Session</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://Codetextechnology.com" target="_blank" class="card card-black">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">05</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>Web Design Service</div>
+          <div class="card-title">Get a Website From Us</div>
+          <div class="card-desc">Let's help you build a high-converting website for your business.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Get Started</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://factorycontact.taplink.ws" target="_blank" class="card card-white">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">06</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>80+ Verified Contacts</div>
+          <div class="card-title">Factory &amp; Suppliers Contacts</div>
+          <div class="card-desc">Grab all my 80+ verified factory and suppliers contacts.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Grab the List</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+    <a href="https://businessgrowthsquare.com/p/f631de/" target="_blank" class="card card-black">
+      <div class="card-body">
+        <div class="card-index"><span class="card-num">07</span><div class="card-vline"></div></div>
+        <div class="card-content">
+          <div class="card-pill"><span class="pill-dot"></span>Free Community</div>
+          <div class="card-title">Join Our Community of Black Business Owners in the UK</div>
+          <div class="card-desc">Don't do business alone in the UK! Connect, grow, and thrive together.</div>
+        </div>
+      </div>
+      <div class="card-footer-bar">
+        <span class="card-cta">Join the Community</span>
+        <div class="arrow-circle"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M17 7H7M17 7V17"/></svg></div>
+      </div>
+    </a>
+
+  </div>
+
+</div>
+</body>
+</html>
